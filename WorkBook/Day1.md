@@ -74,3 +74,11 @@ Text Field와 Text View의 차이점
 ## Picker View
 - 행과 구성요소로 구성된 잠재적 다차원 사용자 인터페이스 요소를 제공한다.
 - 구성요소의 각 행에는 문자열 또는 레이블이나 이미지와 같은 View Object가 있다.
+---
+# Project
+## Assests
+- 이미지 파일 넣는 폴더
+## LaunchScreen
+- 앱을 시작했을 때 잠깐 나오는 화면
+## Main
+- 메인 화면
