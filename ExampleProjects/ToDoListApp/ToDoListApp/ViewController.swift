@@ -16,7 +16,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Get all current saved tasks
+        self.title = "Tasks"
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        // Setup
+        
+        if !UserDefaults().bool(forKey: "setup"){
+            UserDefaults().set(true, forKey: "setup")
+            UserDefaults().set(0, forKey: "count")
+        }
     }
     @IBAction func didTapAdd(){
         let vc = storyboard?.instantiateViewController(identifier: "entry") as! EntryViewController
