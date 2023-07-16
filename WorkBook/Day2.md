@@ -24,12 +24,11 @@
 :question: 이러한 방식은 어떤 문제가 생길 수 있을까요?
 - Frame-Based Layout보다 속도가 느리다.
 # :two: 외부 변경 (External Changes)과 내부 변경 (Internal Changes)
-```
-AutoResizing Mask
-- Super View의 Frame이 변경될 때 View의 Frame이 변경되는 방식을 정의한다.
-- 하지만 AutoResizing Mask는 상대적으로 작은 단위의 변경을 지원하기 때문에, 복잡한 사용자 인터페이스인 경우에는 일반적으로 Frame-Based Layout 방식으로 AutoResizing Mask를 보강해야 한다.
-- AutoResizing Mask는 외부 변경에만 적용된다
-```
+
+> :pushpin: AutoResizing Mask
+> - Super View의 Frame이 변경될 때 View의 Frame이 변경되는 방식을 정의한다.
+> - 하지만 AutoResizing Mask는 상대적으로 작은 단위의 변경을 지원하기 때문에, 복잡한 사용자 인터페이스인 경우에는 일반적으로 Frame-Based Layout 방식으로 AutoResizing Mask를 보강해야 한다.
+> - AutoResizing Mask는 외부 변경에만 적용된다
 ## 외부 변경
 - Super View의 크기나 모양이 변경되면 발생한다.
 - 변경될 때마다 View Hierarchy의 레이아웃을 업데이트해야 한다.
@@ -51,15 +50,39 @@ AutoResizing Mask
 ```
 # :three: Layout Margins
 ## Layout Margins
+![Layout](image-3.png)
+- 컨텐츠들의 위치를 조정한다.
+- 컨텐츠들이 겹치는 것을 막아줄 수 있다.
+![Terms](image-4.png)
 ## AutoLayout의 속성 (Attributes)
+```swift
+var layoutMargins: UIEdgeInsets { get set }
+```
 ## 위치를 나타내는 속성
+```swift
+view.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
+// iOS 11 ~
+view.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+
+```
 :question: 위치를 나타내는 속성을 지정할 때 유의해야 할 것은 무엇이 있을까요?
+- Root view에 지켜줘야 하는 최소한의 layout margin값이 있다.
+- 지정해준 Margin값이 최소 Margin값보다 작다면, 지정 값에 상관없이 최소 Margin값으로 대체된다.
 ## 크기를 나타내는 속성
 :question: 크기를 나타내는 속성을 지정할 때 유의해야 할 것은 무엇이 있을까요?
 # :four: 안전 영역 (Safe Area)
+> :pushpin: Safe Area
+> - 단말기의 UI에서 컨텐츠를 제대로 나타낼 수 있는 부분에만 View를 놓을 수 있게 하는 기능
+> - 최소 Margin값이 적용된 영역 = Safe Area 영역
+
+![Safe Area](image-5.png)
 ## 안전 영역의 등장 배경
-## 안전 영역을 지키지 않고 Layout을 구성하면 어떻게 될까?
-## 안전 영역을 이용 방법
+:question: 안전 영역을 지키지 않고 Layout을 구성하면 어떻게 될까?
+
+## 안전 영역 이용 방법
+```swift
+var safeAreaLayoutGuide: UILayoutGuide { get }
+```
 # :five: 제약 (Constraints)
 ## 제약 (Constraint)
 ## 제약 (Constraint) 설정 방법
