@@ -28,7 +28,7 @@
 > :pushpin: AutoResizing Mask
 > - Super View의 Frame이 변경될 때 View의 Frame이 변경되는 방식을 정의한다.
 > - 하지만 AutoResizing Mask는 상대적으로 작은 단위의 변경을 지원하기 때문에, 복잡한 사용자 인터페이스인 경우에는 일반적으로 Frame-Based Layout 방식으로 AutoResizing Mask를 보강해야 한다.
-> - AutoResizing Mask는 외부 변경에만 적용된다
+> - AutoResizing Mask는 외부 변경에만 적용된다.
 ## 외부 변경
 - Super View의 크기나 모양이 변경되면 발생한다.
 - 변경될 때마다 View Hierarchy의 레이아웃을 업데이트해야 한다.
@@ -76,15 +76,14 @@ view.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 10, leading: 10, bo
 > - 최소 Margin값이 적용된 영역 = Safe Area 영역
 
 ![Safe Area](image-5.png)
-## 안전 영역의 등장 배경
-:question: 안전 영역을 지키지 않고 Layout을 구성하면 어떻게 될까?
-
 ## 안전 영역 이용 방법
 ```swift
 var safeAreaLayoutGuide: UILayoutGuide { get }
 ```
 # :five: 제약 (Constraints)
 ## 제약 (Constraint)
+- 각 객체가 가질 수 있는 여백, 정렬 방법, 다른 객체와의 간격 등
+- 자동 레이아웃을 적용하지 않으면, 기기의 디스플레이마다 객체가 다르게 표시되는 문제를 해결한다.
 ## 제약 (Constraint) 설정 방법
 ## 고유 컨텐츠 크기 (Intrinsic Content Size)
 :question: `UILabel`의 고유 컨텐츠 크기는 어떻게 정해질까요?
