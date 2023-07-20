@@ -34,11 +34,59 @@
 
 # :two: Optional
 
+- 값이 들어갈 수도 있고, 아닐 수도 있다(Optional)
+- nil을 가지려면 Optional을 사용해야 한다
+- Optional로 선언된 자료형은, Optional로 Wrapping되어 있다.
+
+```
+let myFirstOptionalVar: Int?
+
+let possibleNumber = “123”
+let convertedNumber = Int(possibleNumber)
+print(convertedNumber)
+// 출력 결과 : Optional(123)
+```
+
 # Optional Binding
+
+```swift
+var value: String? = "test"
+var forcedvalue: String = value!
+```
+
+- Force unwrapping : !를 사용하여 강제로 옵셔널을 추출
+
+```swift
+var myName: String? = "shine"
+var yourName: String? = nil
+
+if let name = myName, let friend = yourName {
+	print("not in")
+}
+
+yourName = "jrary"
+
+if let name = myName, let friend = yourName {
+	print("we are \(name) and \(friend)")
+}
+```
+
+- Optional Binding : if let, guard let을 써서 옵셔널을 추출
+
+> 💡Optional을 Unwrapping 하고자 하는 변수가 nil이면 안 된다.
 
 # Optional Chaining
 
-# Forced Unwrapping
+- 체인의 형태처럼 연쇄적으로 Optional에 접근한다.
+
+```swift
+let user = null;
+
+alert( user?.address ); // undefined
+alert( user?.address.street ); // undefined
+```
+
+- `?.`은 `?.` 앞의 평가 대상이 nil이면 평가를 멈추고 nil을 반환한다.
 
 # :three: guard문
 
