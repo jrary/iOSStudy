@@ -38,7 +38,7 @@
 - nil을 가지려면 Optional을 사용해야 한다
 - Optional로 선언된 자료형은, Optional로 Wrapping되어 있다.
 
-```
+```swift
 let myFirstOptionalVar: Int?
 
 let possibleNumber = “123”
