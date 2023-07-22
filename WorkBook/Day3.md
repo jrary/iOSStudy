@@ -90,6 +90,30 @@ alert( user?.address.street ); // undefined
 
 # :three: guard문
 
+```swift
+guard 조건 else {
+	// 조건이 false일 때 실행
+}
+```
+
+- 조건을 걸러내는 것
+- if문보다 가독성이 좋다
+
+```swift
+guard someValue != 0 else { return }
+print(someValue)
+```
+
+```swift
+func printMessage(_ message: String?) {
+	guard let letMessage = message else { return }
+    print(letMessage)
+}
+printMessage(string)
+```
+
+- guard를 사용하면 if로 옵셔널 바인딩했을 때와 달리 { } 괄호 밖에서도 사용가능하다.
+
 # :four: 화면 전환
 
 ## present
