@@ -167,4 +167,221 @@ func dismiss(animated flag: Bool, completion: (() -> Void)? = nil)
 
 ## Navigation Controller
 
+- 계층적 구조의 뷰 워크플로우를 구현하기 위해 사용한다.
+- ViewController 사이 계층 구조를 탐색할 수 있게 해주는 객체이다.
+- 자식 뷰를 Stack으로 관리한다.
+
+### 1. push : 뷰 이동
+
+```swift
+func pushViewController(_ viewController: UIViewController, animated: Bool)
+```
+
+- 가로 방향으로 뷰가 전환된다.
+- 스택에 뷰를 쌓는 형태로 화면을 업데이트한다.
+
+```swift
+@IBAction func gotoNextVC(_ sender: Any)
+  guard let signUpVC =  self.storyboard?.instantiateViewController(withIdentifier: "SignUpNickNameVC")  else {return}
+
+  self.navigationController?.pushViewController(signUpVC, animated: true)
+}
+```
+
+- pushViewController(\_:animated:)
+  - viewController : 전환될 뷰
+  - animated : 애니메이션 효과
+
+### 2. pop : 돌아가기
+
+```swift
+func popViewController(animated: Bool) -> UIViewController?
+```
+
+- 스택에 쌓인 뷰 1개를 pop하고 돌아간다.
+
+```swift
+@IBAction func gotoBack(_ sender: Any)
+	self.navigationController?.popViewController(animated: true)
+}
+```
+
+- popViewController(animated:)
+  - animated : 애니메이션 효과
+
+### 3. popTo : 원하는 스택으로 돌아가기
+
+```swift
+func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]?
+```
+
+- 네비게이션 스택의 원하는 ViewController로 돌아간다.
+  = 특정 viewController 가 navigation stack 의 맨 위에 올때까지 Pop을 진행한다.
+
+```swift
+@IBAction func gotoBack(_ sender: Any)
+  guard let signUpVC =  self.storyboard?.instantiateViewController(withIdentifier: "SignUpNickNameVC")  else {return}
+	welcomeVC.modalPresentationStyle = .fullScreen
+
+	self.present(welcomeVC, animated: true, completion: {
+		//navigation 스택에서 돌아가고싶은 뷰까지 pop하면서 이동
+		if let rootVC = ViewControoller as? LoginVC {
+			self.navigationController?.popToViewController(rootVC ,animated: true)
+		}
+	})
+}
+```
+
+- popToViewController(\_:animated:)
+  - viewController : pop해서 이동할 뷰
+  - animated : 애니메이션 효과
+
+### 4. popToRoot : 맨 처음으로 돌아가기
+
+```swift
+func popToRootViewController(animated: Bool) -> [UIViewController]?
+```
+
+- 네비게이션 스택의 RootView로 돌아간다.
+
+```swift
+@IBAction func gotoNextVC(_ sender: Any)
+  guard let signUpVC =  self.storyboard?.instantiateViewController(withIdentifier: "SignUpNickNameVC")  else {return}
+	welcomeVC.modalPresentationStyle = .fullScreen
+
+	self.present(welcomeVC, animated: true, completion: {
+		self.navigationController?.popToRootViewController(animated: true)
+	})
+}
+```
+
+- popToViewController(\_:animated:)
+  - animated : 애니메이션 효과
+
 # :five: ViewController 간의 데이터 전달
+
+1. 직접 전달 방식(동기 방식) : 데이터를 직접 넘겨주는 방법
+
+- present,push시 프로퍼티에 접근해 넘겨주는 방식
+- Segue prepare 메소드를 활용해서 데이터를 넘겨주는 방식
+- Protocol / Delegation을 활용해서 데이터를 넘겨받는 방식
+- Closure를 활용해서 데이터를 넘겨받는 방식
+- NotificationCenter를 활용해 데이터를 넘기는 방식
+
+2. 간접 전달 방식(비동기 방식) : 데이터를 다른곳에 저장해두고, 필요할 때 꺼내가는 방식
+
+- AppDelegate.swift 활용
+- UserDefaults 사용하기
+- CoreData or Realm 활용하기
+
+## 프로퍼티 직접 접근
+
+- 전달하고자 하는 데이터를 뷰 컨트롤러의 프로퍼티에 직접 접근해서 넘기는 방식이다.
+- push, present 방식으로 화면을 전환하는 경우에만 데이터가 정상적으로 사용 가능하다.
+
+```swift
+@IBAction func clickPushButton(_ sender: UIButton) {
+        guard let viewController =
+                self.storyboard?.instantiateViewController(withIdentifier: "blueViewController") as? blueViewController
+        else { return }
+
+        viewController.data = "Blue View Controller로 데이터 이동 완료"
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+```
+
+```swift
+import UIKit
+
+class blueViewController: UIViewController {
+
+    @IBOutlet weak var dataLabel: UILabel!
+    var data: String?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // 전달 받은 데이터를 Label에 표시
+        if let data = data {
+            dataLabel.text = data
+            dataLabel.sizeToFit()
+        }
+    }
+
+    @IBAction func clickBackButton(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+
+}
+```
+
+## Delegate를 이용하여 이전 화면에 데이터 전달
+
+- Delegate를 이용하면 데이터를 주고 받는 뷰 컨트롤러가 서로 의존하지 않고 떨어져 있는 구조를 유지하게 된다.
+- Delegate 패턴을 사용하여 현재 화면의 데이터를 이전 화면에 넘겨 주는 것이 가능하다.
+
+```swift
+protocol SendDataDelegate: AnyObject {
+    func sendData(data: String)
+}
+```
+
+```swift
+import UIKit
+
+class ViewController: UIViewController, SendDataDelegate {
+    @IBOutlet weak var dataLabel: UILabel!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+    }
+
+    @IBAction func clickPushButton(_ sender: UIButton) {
+        guard let viewController =
+                self.storyboard?.instantiateViewController(withIdentifier: "blueViewController") as? blueViewController
+        else { return }
+
+        viewController.data = "Blue View Controller로 데이터 이동 완료"
+
+        viewController.delegate = self // delegate를 위임받음
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    // SendDataDelegate 프로토콜 구현
+    func receiveData(data: String) {
+        self.dataLabel.text = data
+        self.dataLabel.sizeToFit()
+    }
+}
+```
+
+```swift
+import UIKit
+
+protocol SendDataDelegate: AnyObject {
+    func receiveData(data: String)
+}
+
+class blueViewController: UIViewController {
+
+    @IBOutlet weak var dataLabel: UILabel!
+    var data: String?
+    weak var delegate: SendDataDelegate?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        if let data = data {
+            dataLabel.text = data
+            dataLabel.sizeToFit()
+        }
+    }
+
+    @IBAction func clickBackButton(_ sender: UIButton) {
+        delegate?.receiveData(data: "To green view controller") // 데이터 전달
+        self.navigationController?.popViewController(animated: true)
+    }
+
+}
+```
