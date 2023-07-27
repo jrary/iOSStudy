@@ -83,6 +83,59 @@ extension ViewController: UITableViewDataSource {
 
 # :two: CollectionView
 
+![Collection view](image-11.png)
+
+- 여러 데이터를 관리하고 커스텀 가능한 레이아웃을 사용해서 사용자에게 보여준다.
+- Layout을 잡기 위해 각 아이템의 width, height 정보를 모두 필요로 한다.
+
+```swift
+class UICollectionView : UIScrollView
+```
+
+- Data Source
+  - Collection View에서 특정 Section의 아이템 수를 반환해야 함
+- Data
+  - indexPath based protocol을 통해 data source에 의해 관리됨
+- Delegate
+  - 사용자에 관한 터치 이벤트 가 발생했을 때 관련 메소드를 호출함
+- Cell
+
+  - 컬렉션 뷰의 콘텐츠 표시
+
+- Supplementary Views
+
+  - 섹션에 대한 정보 표시(헤더, 푸터), 꼭 구현하지 않아도 됨.
+
+- UICollectionViewDataSource, UICollectionViewDelegate
+
+  - 컬렉션뷰에 표시할 콘텐츠 정보 관리 및 제공, 사용자와 콜렉션뷰 간의 상호작용 관리
+
+- UICollectionReusableView
+  - 뷰를 재사용하여 성능을 향상시킴
+
+## UICollectionViewLayout
+
+-
+
+## UICollectionViewFlowLayout
+
+- CollectionView에 대한 Layout 정보를 생성하기 위한 기본 클래스이다.
+- 현재 행에서 채우다가, 객체의 공간이 부족하면 새로운 행을 생성한다.
+
+1. 수직 스크롤
+   ![Alt text](image-12.png)
+
+- 왼쪽에서 오른쪽으로 셀들을 추가하고 공간이 부족하면 다음 행으로 넘어감
+
+2. 수평 스크롤
+   ![Alt text](image-13.png)
+
+- 헤더 푸터가 양쪽 끝에 있는것이 특징
+- 셀들이 위에서 아래로 채워지다가 열을 다 채웠으면 다음 열로 넘어감
+
+3. 단일행 스크롤
+   ![Alt text](image-14.png)
+
 # :three: ScrollView
 
 # :four: TableViewCell
