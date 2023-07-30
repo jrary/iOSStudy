@@ -115,8 +115,6 @@ class UICollectionView : UIScrollView
 
 ## UICollectionViewLayout
 
--
-
 ## UICollectionViewFlowLayout
 
 - CollectionView에 대한 Layout 정보를 생성하기 위한 기본 클래스이다.
@@ -137,6 +135,33 @@ class UICollectionView : UIScrollView
    ![Alt text](image-14.png)
 
 # :three: ScrollView
+
+- 스크롤과 줌인을 할 수 있는 View이다.
+- UITableView, UITextView 등과 같은 여러 UIKit 클래스의 상위 클래스이다.
+
+```swift
+@MainActor class UIScrollView : UIView
+```
+
+- 안에 들어가는 Content View에 맞게 Origin이 조정된다.
+- Storyboard에서 UIScrollView를 생성하면 ContentLayout과 FrameLayout이라는 요소가 함께 존재한다.
+
+## Layout 구조
+
+![Alt text](image-16.png)
+
+- 노란 부분 - Frame Layout
+- 빨간 부분 - Content Layout
+
+## Frame Layout Guide
+
+- 프레임 레이아웃 안에 Scroll View가 있는 형태이다.
+- Scroll View 자체의 레이아웃이다.
+
+## Content Layout Guide
+
+- Content를 담고 있는 View의 레이아웃이다.
+- Content가 Frame Layout보다 작으면 스크롤을 사용하는 의미가 없어진다.
 
 # :four: TableViewCell
 
