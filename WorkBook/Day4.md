@@ -163,12 +163,10 @@ class UICollectionView : UIScrollView
 - Content를 담고 있는 View의 레이아웃이다.
 - Content가 Frame Layout보다 작으면 스크롤을 사용하는 의미가 없어진다.
 
-# :four: TableViewCell
+# :four: CollectionViewCell
 
-# :five: CollectionViewCell
+# :five: protocol
 
-# :six: protocol
+# :six: delegate
 
-# :seven: delegate
-
-# :eight: DataSource
+# :seven: DataSource
